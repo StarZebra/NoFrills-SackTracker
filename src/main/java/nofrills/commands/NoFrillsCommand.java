@@ -16,13 +16,16 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.PlayerHeadItem;
 import net.minecraft.util.math.Vec3d;
+import nofrills.Main;
 import nofrills.config.Config;
 import nofrills.features.general.PartyCommands;
 import nofrills.features.general.PearlRefill;
 import nofrills.features.hunting.ShardTracker;
+import nofrills.features.mining.SackTracker;
 import nofrills.hud.HudEditorScreen;
 import nofrills.hud.clickgui.ClickGui;
 import nofrills.misc.SkyblockData;
+import nofrills.misc.TrackerSession;
 import nofrills.misc.Utils;
 
 import java.util.List;
@@ -266,6 +269,33 @@ public class NoFrillsCommand {
                 return SINGLE_SUCCESS;
             })).then(literal("settings").executes(context -> {
                 Utils.setScreen(ShardTracker.buildSettings());
+                return SINGLE_SUCCESS;
+            }))),
+            new ModCommand("sackTracker", "Commands to manage the Sack Tracker feature.", literal("sackTracker").executes(context -> {
+                Utils.info("§cUse any of the sack trackers sub commands.");
+                return SINGLE_SUCCESS;
+            }).then(literal("start").executes(context -> {
+                if(!SackTracker.isSessionActive()){
+                    Main.session = new TrackerSession(SackTracker.selectedCollection.value().toString());
+                    Main.session.start();
+                }
+                return SINGLE_SUCCESS;
+            })).then(literal("stop").executes(context -> {
+                if(SackTracker.isSessionActive()){
+                    Main.session.stop();
+                }
+                return SINGLE_SUCCESS;
+            })).then(literal("pause").executes(context -> {
+                if(SackTracker.isSessionActive() && !Main.session.isPaused()){
+                    Main.session.pause();
+                    SackTracker.refreshDisplay();
+                }
+                return SINGLE_SUCCESS;
+            })).then(literal("resume").executes(context -> {
+                if(SackTracker.isSessionActive() && Main.session.isPaused()){
+                    Main.session.resume();
+                    SackTracker.refreshDisplay();
+                }
                 return SINGLE_SUCCESS;
             })))
     };

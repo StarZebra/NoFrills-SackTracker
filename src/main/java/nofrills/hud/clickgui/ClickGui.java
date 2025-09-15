@@ -502,8 +502,14 @@ public class ClickGui extends BaseOwoScreen<FlowLayout> {
                         new Module("End Node Highlight", EndNodeHighlight.instance, "Highlights Ender Nodes.", new Settings(List.of(
                                 new Settings.ColorPicker("Color", true, EndNodeHighlight.color, "The color of the node highlight.")
                         ))),
+
                         new Module("Temple Skip", TempleSkip.instance, "Highlights a pearl skip spot for the Jungle Temple once you approach the entrance.", new Settings(List.of(
                                 new Settings.ColorPicker("Color", true, TempleSkip.color, "The color of the skip highlight.")
+                        ))),new Module("Sack Tracker", SackTracker.instance, "Tracks your item gains from sack messages, useful for collection tracking.", new Settings(List.of(
+                                new Settings.Dropdown<>("Collection", SackTracker.selectedCollection, "The collection you want to track."),
+                                new Settings.Toggle("Hide Rates", SackTracker.hideRates, "Hides the 'collection/h' element in the tracker."),
+                                new Settings.Toggle("Hide Efficiency", SackTracker.hideEfficiency, "Hides the efficiency element in the tracker."),
+                                new Settings.Toggle("Hide Time", SackTracker.hideTime, "Hides the time elapsed element in the tracker.")
                         )))
                 )),
                 new Category("Farming", List.of(

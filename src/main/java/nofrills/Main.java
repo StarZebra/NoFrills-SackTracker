@@ -47,6 +47,7 @@ public class Main implements ModInitializer {
     public static final IEventBus eventBus = new EventBus();
 
     public static MinecraftClient mc;
+    public static TrackerSession session;
 
     public static void registerCommands(CommandDispatcher<FabricClientCommandSource> dispatcher, CommandRegistryAccess access) {
         YeetCommand.init(dispatcher);
@@ -149,6 +150,7 @@ public class Main implements ModInitializer {
         eventBus.subscribe(MimicMessage.class);
         eventBus.subscribe(PrinceMessage.class);
         eventBus.subscribe(SpiritBearTimer.class);
+        eventBus.subscribe(SackTracker.class);
 
         LOGGER.info("It's time to get real, NoFrills mod initialized in {}ms.", Util.getMeasuringTimeMs() - start);
     }
